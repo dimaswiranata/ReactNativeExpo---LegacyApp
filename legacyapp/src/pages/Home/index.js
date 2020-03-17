@@ -19,7 +19,7 @@ Home.propTypes = {
   exampleProp: PropTypes.string, // PropTypes example
 }
 
-Home.propTypes = {
+Home.defaultProps = {
   exampleProp: 'example prop', // Default props Example
 }
 

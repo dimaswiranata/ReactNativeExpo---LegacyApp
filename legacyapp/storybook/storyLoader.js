@@ -7,14 +7,18 @@ function loadStories() {
 	require('../src/components/CardQueue/CardQueue.stories');
 	require('../src/components/CardServices/CardServices.stories');
 	require('../src/components/Icon/Icon.stories');
+	require('../src/components/LIstItem/ListItem.stories');
 	require('../src/pages/OnBoarding/OnBoarding.stories');
+	require('../src/pages/Start/Start.stories');
 }
 
 const stories = [
 	'../src/components/CardQueue/CardQueue.stories',
 	'../src/components/CardServices/CardServices.stories',
 	'../src/components/Icon/Icon.stories',
-	'../src/pages/OnBoarding/OnBoarding.stories'
+	'../src/components/LIstItem/ListItem.stories',
+	'../src/pages/OnBoarding/OnBoarding.stories',
+	'../src/pages/Start/Start.stories'
 ];
 
 module.exports = {
