@@ -1,21 +1,22 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, Image, StyleSheet, TextInput, Button } from 'react-native';
+import { View, StyleSheet, ScrollView, FlatList } from 'react-native';
 import ListItem from '../LIstItem';
 
 export default function PlaceList({ places, onItemDeleted }) {
-  const placesOutput = places.map((places, i) => (
-    <ListItem 
-      key={i}
-      placeName={places}
-      // onItemPressed={() => alert('Item Pressed - ID: ' + i)}
-      onItemPressed={() => onItemDeleted(i)}
-    />
-  ));
   return (
-    <View style={styles.listContainer}>
-      {placesOutput}
-    </View>
+    <FlatList 
+      style={styles.listContainer}
+      data={places}
+      renderItem={(info) => (
+        <ListItem
+          placeName={info.item.value}
+          placeImage={info.item.image}
+          // onItemPressed={() => alert('Item Pressed - ID: ' + i)}
+          onItemPressed={() => onItemDeleted(info.item.key)}
+        />
+      )}   
+    />
   );
 }
 
