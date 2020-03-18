@@ -11,10 +11,19 @@ const Starting = (props) => {
     setPlaces(places => places.concat(placeName));
   };
 
+  const placeDeletedHandler = (index) => {
+    setPlaces(places => places.filter((place, i) => {
+      return i !== index;
+    }));
+  };
+
   return (
     <View style={styles.container}>
       <PlaceInput onPlaceAdded={placeAddedHandler}/>
-      <PlaceList places={places}/>
+      <PlaceList 
+        places={places} 
+        onItemDeleted={placeDeletedHandler}
+      />
     </View>
   )
 }

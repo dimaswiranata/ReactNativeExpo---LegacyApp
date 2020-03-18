@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { View, Text, Image, StyleSheet, TextInput, Button } from 'react-native';
 import ListItem from '../LIstItem';
 
-export default function PlaceList({ places }) {
+export default function PlaceList({ places, onItemDeleted }) {
   const placesOutput = places.map((places, i) => (
     <ListItem 
       key={i}
       placeName={places}
+      // onItemPressed={() => alert('Item Pressed - ID: ' + i)}
+      onItemPressed={() => onItemDeleted(i)}
     />
   ));
   return (
@@ -24,7 +26,8 @@ const styles = StyleSheet.create({
 })
 
 PlaceList.propTypes = { 
-  places : PropTypes.array
+  places : PropTypes.array,
+  onItemDeleted : PropTypes.func
 }
 
 PlaceList.defaultProps = {}
