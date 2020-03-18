@@ -13,6 +13,7 @@ export default function ListItem({ placeName }) {
 const styles = StyleSheet.create({
   ListItem: {
     width: '100%',
+    margin: 5,
     padding: 10,
     backgroundColor: '#eee'
   }
