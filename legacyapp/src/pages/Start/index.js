@@ -3,10 +3,12 @@ import {View, Text, StyleSheet, TextInput, Button} from 'react-native';
 import PropTypes from 'prop-types';
 import PlaceList from '../../components/PlaceList';
 import PlaceInput from '../../components/PlaceInput';
+import PlaceDetail from '../../components/PlaceDetail';
 import { images } from '../../utils/images.utils';
 
 const Starting = (props) => {
   const [places, setPlaces] = useState([]);
+  const [selectedPlace, setSelectedPlace] = useState(null);
 
   const placeAddedHandler = (placeName) => {
     setPlaces(places => 
@@ -23,18 +25,26 @@ const Starting = (props) => {
     );
   };
 
-  const placeDeletedHandler = (key) => {
-    setPlaces(places => places.filter(place => {
-      return place.key !== key;
+  // const placeDeletedHandler = (key) => {
+  //   setPlaces(places => places.filter(place => {
+  //     return place.key !== key;
+  //   }));
+  // };
+
+  const placeSelectedHandler = key => {
+    setSelectedPlace(places => places.find(place => {
+      return place.key === key;
     }));
   };
 
   return (
     <View style={styles.container}>
+      <PlaceDetail selectedPlace={selectedPlace}/>
       <PlaceInput onPlaceAdded={placeAddedHandler}/>
       <PlaceList 
         places={places} 
-        onItemDeleted={placeDeletedHandler}
+        // onItemDeleted={placeDeletedHandler}
+        onItemSelected={placeSelectedHandler}
       />
     </View>
   )

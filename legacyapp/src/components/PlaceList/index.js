@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { View, StyleSheet, ScrollView, FlatList } from 'react-native';
 import ListItem from '../LIstItem';
 
-export default function PlaceList({ places, onItemDeleted }) {
+export default function PlaceList({ places, onItemSelected }) {
   return (
     <FlatList 
       style={styles.listContainer}
@@ -13,7 +13,7 @@ export default function PlaceList({ places, onItemDeleted }) {
           placeName={info.item.value}
           placeImage={info.item.image}
           // onItemPressed={() => alert('Item Pressed - ID: ' + i)}
-          onItemPressed={() => onItemDeleted(info.item.key)}
+          onItemPressed={() => onItemSelected(info.item.key)}
         />
       )}   
     />
@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
 
 PlaceList.propTypes = { 
   places : PropTypes.array,
-  onItemDeleted : PropTypes.func
+  // onItemDeleted : PropTypes.func
+  onItemSelected : PropTypes.func
 }
 
 PlaceList.defaultProps = {}
