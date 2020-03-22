@@ -13,7 +13,7 @@ export default function PlaceDetail({selectedPlace, onItemDeleted, onModalClosed
     );
   };
   return (
-    <Modal visible={selectedPlace !== null} animationType='slide'>
+    <Modal onRequestClose={onModalClosed} visible={selectedPlace !== null} animationType='slide'>
       <View style={styles.modalContainer}>
         {modalContent}
         <View>

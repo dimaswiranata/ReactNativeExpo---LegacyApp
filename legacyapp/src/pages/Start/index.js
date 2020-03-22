@@ -25,8 +25,9 @@ const Starting = (props) => {
     );
   };
 
-  const placeDeletedHandler = (key) => {
-    setPlaces(places.filter(place => place.key !== key));
+  const placeDeletedHandler = () => {
+    setPlaces(places.filter(place => place.key !== selectedPlace.key));
+    setSelectedPlace(null);
   };
 
   modalClosedHandler = () => {
