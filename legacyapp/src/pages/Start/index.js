@@ -11,11 +11,11 @@ const Starting = (props) => {
   const [selectedPlace, setSelectedPlace] = useState(null);
 
   const placeAddedHandler = (placeName) => {
-    setPlaces(places => 
+    setPlaces(
       places.concat(
         {
           key : Math.random(),
-          value : placeName,
+          name : placeName,
           //Static Image
           // image: images.STATICIMAGE
           // Network Image
@@ -31,10 +31,8 @@ const Starting = (props) => {
   //   }));
   // };
 
-  const placeSelectedHandler = key => {
-    setSelectedPlace(places => places.find(place => {
-      return place.key === key;
-    }));
+  const placeSelectedHandler = (key) => {
+    setSelectedPlace(places.find(place => place.key === key));
   };
 
   return (

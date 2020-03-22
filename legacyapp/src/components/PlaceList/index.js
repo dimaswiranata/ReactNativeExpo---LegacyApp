@@ -10,7 +10,7 @@ export default function PlaceList({ places, onItemSelected }) {
       data={places}
       renderItem={(info) => (
         <ListItem
-          placeName={info.item.value}
+          placeName={info.item.name}
           placeImage={info.item.image}
           // onItemPressed={() => alert('Item Pressed - ID: ' + i)}
           onItemPressed={() => onItemSelected(info.item.key)}

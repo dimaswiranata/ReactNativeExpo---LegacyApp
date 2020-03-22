@@ -7,17 +7,17 @@ export default function PlaceDetail({selectedPlace}) {
   if (selectedPlace){
     modalContent =(
       <View>
-        <Image source={selectedPlace.placeImage}/>
-        <Text>{selectedPlace.placeName}</Text>
+        <Image source={{uri : selectedPlace.image}} style={styles.placeImage}/>
+        <Text style={styles.placeName}>{selectedPlace.name}</Text>
       </View>
     );
   };
   return (
-    <Modal visible={selectedPlace !== null}>
+    <Modal visible={selectedPlace !== null} animationType='slide'>
       <View style={styles.modalContainer}>
         {modalContent}
         <View>
-          <Button title='Delete'/>
+          <Button title='Delete' color='red'/>
           <Button title='Close'/>
         </View>
       </View>
@@ -28,11 +28,18 @@ export default function PlaceDetail({selectedPlace}) {
 const styles = StyleSheet.create({
   modalContainer: {
     margin: 22
+  },
+  placeImage : {
+    width: '100%',
+    height: 300
+  },
+  placeName: {
+    fontWeight: 'bold'
   }
 })
 
 PlaceDetail.propTypes = {  
-  selectedPlace: PropTypes.object
+  selectedPlace: PropTypes.node
 }
 
 PlaceDetail.defaultProps = {}
