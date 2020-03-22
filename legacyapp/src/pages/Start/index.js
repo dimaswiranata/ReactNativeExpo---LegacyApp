@@ -25,11 +25,13 @@ const Starting = (props) => {
     );
   };
 
-  // const placeDeletedHandler = (key) => {
-  //   setPlaces(places => places.filter(place => {
-  //     return place.key !== key;
-  //   }));
-  // };
+  const placeDeletedHandler = (key) => {
+    setPlaces(places.filter(place => place.key !== key));
+  };
+
+  modalClosedHandler = () => {
+    setSelectedPlace(null);
+  };
 
   const placeSelectedHandler = (key) => {
     setSelectedPlace(places.find(place => place.key === key));
@@ -37,7 +39,10 @@ const Starting = (props) => {
 
   return (
     <View style={styles.container}>
-      <PlaceDetail selectedPlace={selectedPlace}/>
+      <PlaceDetail selectedPlace={selectedPlace} 
+        onItemDeleted={placeDeletedHandler} 
+        onModalClosed={modalClosedHandler}
+      />
       <PlaceInput onPlaceAdded={placeAddedHandler}/>
       <PlaceList 
         places={places} 

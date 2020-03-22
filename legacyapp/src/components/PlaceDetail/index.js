@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal, View, Image, Text, Button, StyleSheet } from 'react-native';
 
-export default function PlaceDetail({selectedPlace}) {
+export default function PlaceDetail({selectedPlace, onItemDeleted, onModalClosed}) {
   let modalContent = null;
   if (selectedPlace){
     modalContent =(
@@ -17,8 +17,8 @@ export default function PlaceDetail({selectedPlace}) {
       <View style={styles.modalContainer}>
         {modalContent}
         <View>
-          <Button title='Delete' color='red'/>
-          <Button title='Close'/>
+          <Button title='Delete' color='red' onPress={onItemDeleted}/>
+          <Button title='Close' onPress={onModalClosed}/>
         </View>
       </View>
     </Modal>
@@ -34,12 +34,16 @@ const styles = StyleSheet.create({
     height: 300
   },
   placeName: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    textAlign: 'center',
+    fontSize: 28
   }
 })
 
 PlaceDetail.propTypes = {  
-  selectedPlace: PropTypes.node
+  selectedPlace: PropTypes.node,
+  onItemDeleted: PropTypes.func,
+  onModalClosed: PropTypes.func
 }
 
 PlaceDetail.defaultProps = {}
