@@ -13,7 +13,7 @@ const reducer = (state = initialState, action) => {
         places: state.places.concat({
           key: Math.random(),
           name: action.placeName,
-          image: 'https://a2.udemycdn.com/2017-11-28_22-12-06-81f19b918bd7c42cff55269192f98f5e/original.jpg?nva=20200318234406&token=0f52448571fc9291e561d'
+          image: 'https://image.shutterstock.com/image-photo/white-transparent-leaf-on-mirror-260nw-577160911.jpg'
         })
       };
     case DELETE_PLACE:

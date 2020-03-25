@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {View, Text, StyleSheet, TextInput, Button} from 'react-native';
+import {View, Text, StyleSheet, TextInput, Button, TouchableOpacity} from 'react-native';
 import PropTypes from 'prop-types';
 import PlaceList from '../../components/PlaceList';
 import PlaceInput from '../../components/PlaceInput';
