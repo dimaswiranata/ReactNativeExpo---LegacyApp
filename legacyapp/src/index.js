@@ -1,22 +1,22 @@
 import React from 'react';
-// import { Provider } from 'react-redux';
+import { Provider } from 'react-redux';
 
 import NavigationUtils from './utils/navigation.utils';
 import Router from './routes';
-// import initStore from './redux/store';
+import configureCore from './core';
 
-// const store = initStore();
+const core = configureCore();
 
 const AppContainer = () => {
   return (
     <>
-      {/* <Provider store={ store }> */}
+      <Provider store={ core }>
         <Router 
           ref={navigatorRef => {
             NavigationUtils.setTopLevelNavigator(navigatorRef);
           }}
         />
-      {/* </Provider> */}
+      </Provider>
     </>
   );
 }
