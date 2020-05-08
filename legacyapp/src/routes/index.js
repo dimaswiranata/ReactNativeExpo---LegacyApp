@@ -3,8 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Storybook from '../../storybook';
-import Home from '../pages/Home'
-import OnBoarding from '../pages/OnBoarding';
 import Start from '../pages/Start';
 
 const Stack = createStackNavigator();
@@ -18,14 +16,6 @@ function StackRouter() {
       <Stack.Screen
         name="Storybook"
         component={Storybook}
-      />
-      <Stack.Screen
-        name="Home"
-        component={Home}
-      />
-      <Stack.Screen
-        name="OnBoarding"
-        component={OnBoarding}
       />
       <Stack.Screen
         name="Start"
