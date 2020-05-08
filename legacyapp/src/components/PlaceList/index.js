@@ -15,7 +15,8 @@ export default function PlaceList({ places, onItemSelected }) {
           // onItemPressed={() => alert('Item Pressed - ID: ' + i)}
           onItemPressed={() => onItemSelected(info.item.key)}
         />
-      )}   
+      )}
+      keyExtractor={item => item.key}   
     />
   );
 }

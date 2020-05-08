@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
 })
 
 PlaceDetail.propTypes = {  
-  selectedPlace: PropTypes.ReactNode,
+  selectedPlace: PropTypes.array,
   onItemDeleted: PropTypes.func,
   onModalClosed: PropTypes.func
 }
