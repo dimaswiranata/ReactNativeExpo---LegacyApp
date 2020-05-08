@@ -9,8 +9,10 @@ import SharePlace from '../pages/SharePlace';
 import FindPlace from '../pages/FindPlace';
 import Auth from '../pages/Auth';
 import Icon from '../components/Icon';
+import { navigationRef } from '../utils/navigation.utils';
 
 const Tab = createBottomTabNavigator();
+
 function TabRouter() {
   return (
     <Tab.Navigator
@@ -68,7 +70,7 @@ const Stack = createStackNavigator();
 function StackRouter() {
   return (
     <Stack.Navigator
-      initialRouteName="InApp"
+      initialRouteName="Auth"
       screenOptions={{ gestureEnabled: false, headerShown: false }}
     >
       <Stack.Screen
@@ -93,7 +95,7 @@ function StackRouter() {
 
 export default function Router() {
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <StackRouter />
     </NavigationContainer>
   );
