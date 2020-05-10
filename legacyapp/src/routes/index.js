@@ -40,8 +40,8 @@ function TabRouter() {
         options={{
           tabBarIcon: ({color, size}) => 
             <Icon 
-              name='home' 
-              type='MaterialCommunityIcons'
+              name='md-map' 
+              type='Ionicons'
               color={color} 
               size={size}
             />
@@ -54,8 +54,8 @@ function TabRouter() {
         options={{
           tabBarIcon: ({color, size}) => 
             <Icon 
-              name='home' 
-              type='MaterialCommunityIcons'
+              name='ios-share-alt' 
+              type='Ionicons'
               color={color} 
               size={size}
             />
