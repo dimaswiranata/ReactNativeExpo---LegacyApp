@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
+import { connect } from 'react-redux';
+
 import Header from '../../components/Header';
+import PlaceList from '../../components/PlaceList';
 
 class FindPlace extends Component {
 
@@ -8,14 +11,29 @@ class FindPlace extends Component {
     return (
       <>
         <Header 
-          title='Share Place'
+          title='Find Place'
         />
         <View>
-          <Text>FindPlace Screen</Text>
+          <PlaceList 
+            places={this.props.places}
+          />
         </View>
       </>
     );
   }
 }
 
-export default FindPlace;
+const mapStateToProps = state => {
+  return{
+    places: state.places.places
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return{
+    onAddPlace: (name) => dispatch(addPlace(name)),
+    onDeletePlace: () => dispatch(deletePlace())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FindPlace);

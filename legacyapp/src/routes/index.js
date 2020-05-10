@@ -35,26 +35,25 @@ function TabRouter() {
       }}
     >
       <Tab.Screen
-        name="Share"
-        component={SharePlace}
-        options={{
-          tabBarIcon: ({color, size}) => 
-            <Icon 
-              name='md-map' 
-              type='Ionicons'
-              color={color} 
-              size={size}
-            />
-        }}
-      />
-
-      <Tab.Screen
         name="Find"
         component={FindPlace}
         options={{
           tabBarIcon: ({color, size}) => 
             <Icon 
               name='ios-share-alt' 
+              type='Ionicons'
+              color={color} 
+              size={size}
+            />
+        }}
+      />
+      <Tab.Screen
+        name="Share"
+        component={SharePlace}
+        options={{
+          tabBarIcon: ({color, size}) => 
+            <Icon 
+              name='md-map' 
               type='Ionicons'
               color={color} 
               size={size}

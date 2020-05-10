@@ -14,8 +14,7 @@ export default function PlaceInput({ onPlaceAdded }) {
       return;
     }
 
-    onPlaceAdded(placeName)
-    setPlaceName('')
+    onPlaceAdded(placeName);
   };
 
   return (

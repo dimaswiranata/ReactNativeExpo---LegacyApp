@@ -1,8 +1,21 @@
 import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
+import { connect } from 'react-redux';
+import {addPlace, deletePlace } from '../../core/actions';
+
 import Header from '../../components/Header';
+import PlaceInput from '../../components/PlaceInput';
 
 class SharePlace extends Component {
+
+  placeAddedHandler = (placeName) => {
+    this.props.onAddPlace(placeName)
+  };
+
+  placeDeletedHandler = () => {
+    this.props.onDeletePlace();
+  };
+
   render () {
     return (
       <>
@@ -10,11 +23,24 @@ class SharePlace extends Component {
           title='Share Place'
         />
         <View>
-          <Text>SharePlace Screen</Text>
+          <PlaceInput onPlaceAdded={this.placeAddedHandler}/>
         </View>
       </>
     );
   }
 }
 
-export default SharePlace;
+const mapStateToProps = state => {
+  return{
+    places: state.places.places
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return{
+    onAddPlace: (name) => dispatch(addPlace(name)),
+    onDeletePlace: () => dispatch(deletePlace())
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SharePlace);
