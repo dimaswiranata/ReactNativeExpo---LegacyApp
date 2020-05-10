@@ -4,10 +4,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Storybook from '../../storybook';
-import Start from '../pages/Start';
 import SharePlace from '../pages/SharePlace';
 import FindPlace from '../pages/FindPlace';
 import Auth from '../pages/Auth';
+import DetailPlace from '../pages/PlaceDetail';
 import Icon from '../components/Icon';
 import { navigationRef } from '../utils/navigation.utils';
 
@@ -77,12 +77,12 @@ function StackRouter() {
         component={Storybook}
       />
       <Stack.Screen
-        name="Start"
-        component={Start}
-      />
-      <Stack.Screen
         name="Auth"
         component={Auth}
+      />
+      <Stack.Screen
+        name="Detail"
+        component={DetailPlace}
       />
       <Stack.Screen
         name="InApp"

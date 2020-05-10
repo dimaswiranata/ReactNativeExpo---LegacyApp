@@ -10,7 +10,6 @@ function loadStories() {
 	require('../src/pages/Auth/Auth.stories');
 	require('../src/pages/FindPlace/FindPlace.stories');
 	require('../src/pages/SharePlace/SharePlace.stories');
-	require('../src/pages/Start/Start.stories');
 }
 
 const stories = [
@@ -19,8 +18,7 @@ const stories = [
 	'../src/components/SearchTextField/SearchTextField.stories',
 	'../src/pages/Auth/Auth.stories',
 	'../src/pages/FindPlace/FindPlace.stories',
-	'../src/pages/SharePlace/SharePlace.stories',
-	'../src/pages/Start/Start.stories'
+	'../src/pages/SharePlace/SharePlace.stories'
 ];
 
 module.exports = {

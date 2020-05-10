@@ -4,8 +4,21 @@ import { connect } from 'react-redux';
 
 import Header from '../../components/Header';
 import PlaceList from '../../components/PlaceList';
+import NavigationUtils from '../../utils/navigation.utils';
 
 class FindPlace extends Component {
+
+  itemSelectecdHandler = key => {
+
+    const selPlace = this.props.places.find(place => {
+      return place.key === key;
+    })
+
+    NavigationUtils.navigate('Detail', {
+      title: selPlace.name,
+      selectedPlace: selPlace
+    })
+  };
 
   render () {
     return (
@@ -16,6 +29,7 @@ class FindPlace extends Component {
         <View>
           <PlaceList 
             places={this.props.places}
+            onItemSelected={this.itemSelectecdHandler}
           />
         </View>
       </>
@@ -31,8 +45,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return{
-    onAddPlace: (name) => dispatch(addPlace(name)),
-    onDeletePlace: () => dispatch(deletePlace())
+    onAddPlace: (name) => dispatch(addPlace(name))
   };
 };
 
