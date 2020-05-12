@@ -1,5 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import 'react-native-gesture-handler';
 
 import NavigationUtils from './utils/navigation.utils';
 import Router from './routes';
