@@ -25,6 +25,7 @@ class FindPlace extends Component {
       <>
         <Header 
           title='Find Place'
+          openDrawer={true}
         />
         <View>
           <PlaceList 

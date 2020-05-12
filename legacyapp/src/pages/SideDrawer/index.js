@@ -1,11 +1,18 @@
 import React from 'react';
+import Header from '../../components/Header';
 import { View, Text } from 'react-native';
 
 const SideDrawer = props => {
   return (
-    <View>
-      <Text>Side Drawer Screen</Text>
-    </View>
+    <>
+      <Header
+        title='Side Drawer'
+        openDrawer={ true }
+      />
+      <View>
+        <Text>Side Drawer Screen</Text>
+      </View>
+    </>
   );
 }
 

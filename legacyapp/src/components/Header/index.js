@@ -25,7 +25,8 @@ const propTypes = {
   leftContainerStyle: PropTypes.object,
   leftTransparentStyle : PropTypes.object,
   rightContainerStyle: PropTypes.object,
-  headerContainerStyle: PropTypes.object
+  headerContainerStyle: PropTypes.object,
+  openDrawer: PropTypes.bool,
 }
 const defaultProps = {
   backButton: false,
@@ -45,9 +46,11 @@ const Header = ({
   centerComponent,
   backButton,
   homeButton,
-  searchBar
+  searchBar,
+  openDrawer
 }) => {
   const goBack = () => NavigationUtils.popAction();
+  const openToggleDrawer = () => NavigationUtils.openDrawer();
   const goHome = () => NavigationUtils.navigate('InApp');
   return (
     <>
@@ -74,6 +77,22 @@ const Header = ({
               <Icon 
                 name='arrow-left' 
                 type='MaterialCommunityIcons'
+                color={'#fff'} 
+                size={25}
+              />
+            </TouchableOpacity>
+          }
+          {
+            openDrawer &&
+            <TouchableOpacity
+              style={{
+                marginRight: 10
+              }}
+              onPress={openToggleDrawer}
+            >
+              <Icon 
+                name='md-menu' 
+                type='Ionicons'
                 color={'#fff'} 
                 size={25}
               />
@@ -138,7 +157,8 @@ export const HeaderTransparent = ({
   centerComponent,
   backButton,
   homeButton,
-  searchBar
+  searchBar,
+  openDrawer
 }) => {
   const goBack = () => NavigationUtils.popAction();
   const goHome = () => NavigationUtils.navigate('InApp');
@@ -238,7 +258,8 @@ export const HomeHeader = ({
   rightComponent,
   centerComponent,
   backButton,
-  searchBar
+  searchBar,
+  openDrawer
 }) => {
   return (
     <>

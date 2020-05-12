@@ -1,5 +1,5 @@
 import React from 'react';
-import { StackActions, CommonActions, NavigationAction } from '@react-navigation/native';
+import { StackActions, CommonActions, NavigationAction, DrawerActions } from '@react-navigation/native';
 
 let _navigator;
 
@@ -33,6 +33,12 @@ function replace(name, params = {}){
   );
 }
 
+function openDrawer() {
+  navigationRef.current?.dispatch(
+    DrawerActions.toggleDrawer()
+  );
+}
+
 function resetAction(name, params = {}) {
   CommonActions.reset({
     index: 1,
@@ -48,5 +54,6 @@ export default {
   popAction,
   resetAction,
   logOutAction,
-  replace
+  replace,
+  openDrawer
 }
