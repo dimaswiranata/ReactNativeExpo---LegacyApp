@@ -7,8 +7,14 @@ import Icon from '../../components/Icon';
 class AuthScreen extends Component {
 
   state = {
+    email: '',
+    password: '',
+    confirmPassword: '',
     showPassword: true,
-    showConfirmPassword: true
+    showConfirmPassword: true,
+    isValidUser: true,
+    isValidPassword: true,
+    isValidConfirmPassword: true
   }
 
   showPasswordHandler = () => {
@@ -17,6 +23,33 @@ class AuthScreen extends Component {
 
   showConfirmPasswordHandler = () => {
     this.setState({showConfirmPassword: !this.state.showConfirmPassword});
+  }
+
+  handleEmailChange = (value) => {
+    let isValid = true;
+
+    const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+    isValid = pattern.test(value);
+
+    if (value.trim().length >= 0 ) {
+      this.setState({password: value, isValidUser: isValid});
+    }
+  }
+
+  handlePasswordChange = (value) => {
+    if (value.trim().length >= 6 ) {
+      this.setState({password: value, isValidPassword: true});
+    } else {
+      this.setState({password: value, isValidPassword: false});
+    }
+  }
+
+  handleConfirmPasswordChange = (value) => {
+    if (value.trim() === this.state.password ) {
+      this.setState({confirmPassword: value, isValidConfirmPassword: true});
+    } else {
+      this.setState({confirmPassword: value, isValidConfirmPassword: false});
+    }
   }
 
   loginHandler= () => {
@@ -31,6 +64,8 @@ class AuthScreen extends Component {
         <Input
           placeholder='email@address.com'
           label='Your Email Address'
+          onChangeText={value => this.handleEmailChange(value)}
+          errorMessage={!this.state.isValidUser ? 'Please enter a valid email address' : null}
           leftIcon={
             <Icon 
               name="mail" 
@@ -44,6 +79,8 @@ class AuthScreen extends Component {
           placeholder='Password'
           label='Password'
           secureTextEntry={!this.state.showPassword ? false : true}
+          onChangeText={value => this.handlePasswordChange(value)}
+          errorMessage={!this.state.isValidPassword ? 'Password at least 6 characters' : null}
           leftIcon={
             <Icon 
               name="lock" 
@@ -77,6 +114,8 @@ class AuthScreen extends Component {
           placeholder='Confirm Password'
           label='Confirm Password'
           secureTextEntry={!this.state.showConfirmPassword ? false : true}
+          onChangeText={value => this.handleConfirmPasswordChange(value)}
+          errorMessage={!this.state.isValidConfirmPassword ? 'The confirmation and password do not match' : null}
           leftIcon={
             <Icon 
               name="lock" 
@@ -106,7 +145,10 @@ class AuthScreen extends Component {
             </TouchableOpacity>
           }
         />
-        <Button  title='Submit' onPress={() => this.loginHandler()}/>
+        <Button  
+          title='Submit' 
+          onPress={() => this.loginHandler()}
+        />
       </View>
     );
   }
