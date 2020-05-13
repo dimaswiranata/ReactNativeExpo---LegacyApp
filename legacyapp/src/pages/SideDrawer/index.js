@@ -1,19 +1,33 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Header from '../../components/Header';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 
-const SideDrawer = props => {
-  return (
-    <>
-      <Header
-        title='Side Drawer'
-        openDrawer={ true }
-      />
-      <View>
-        <Text>Side Drawer Screen</Text>
-      </View>
-    </>
-  );
+class SideDrawer extends Component{
+  render() {
+    return (
+      <>
+        <Header
+          title='Side Drawer'
+          openDrawer={ true }
+        />
+        <View
+          style={[
+            styles.container
+          ]}
+        >
+          <Text>Side Drawer Screen</Text>
+        </View>
+      </>
+    );
+  }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 22,
+    backgroundColor: 'white',
+    flex: 1
+  }
+});
 
 export default SideDrawer;
