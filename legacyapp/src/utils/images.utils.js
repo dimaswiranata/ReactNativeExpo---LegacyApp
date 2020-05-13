@@ -5,6 +5,7 @@ export const images = {
     _3: require('../assets/images/onboarding/OnBoarding-3.png'),
   },
   STATICIMAGE : require('../assets/images/beautiful.jpg'),
+  BACKGROUND_IMG : require('../assets/images/background.jpg')
 }
 
 export default images;
