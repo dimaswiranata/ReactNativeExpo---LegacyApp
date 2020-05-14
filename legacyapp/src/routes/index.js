@@ -1,4 +1,5 @@
 import React from 'react';
+import { Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -24,17 +25,15 @@ function TabRouter() {
   return (
     <Tab.Navigator
       initialRouteName="Find"
-      activeColor="#fff"
     >
       <Tab.Screen
         name="Find"
         component={FindStackRouter}
         options={{
           tabBarLabel: 'Find',
-          tabBarColor: '#009387',
           tabBarIcon: ({ color, size }) => (
             <Icon 
-              name="md-share-alt" 
+              name={Platform.OS === 'android' ? 'md-share-alt' : 'ios-share-alt'} 
               type='Ionicons' 
               color={color} 
               size={size} 
@@ -47,10 +46,9 @@ function TabRouter() {
         component={ShareStackRouter}
         options={{
           tabBarLabel: 'Share',
-          tabBarColor: '#009387',
           tabBarIcon: ({ color, size }) => (
             <Icon 
-              name="md-map" 
+            name={Platform.OS === 'android' ? 'md-map' : 'ios-map'}  
               type='Ionicons' 
               color={color} 
               size={size} 
@@ -67,13 +65,6 @@ const FindStackRouter = () => {
     <FindStack.Navigator
       initialRouteName="Find"
       screenOptions={{
-        headerStyle: {
-          backgroundColor: '#009387'
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: 'bold'
-        },
         headerShown: false
       }}
     >
@@ -97,13 +88,6 @@ const ShareStackRouter = () => {
     <ShareStack.Navigator
       initialRouteName="Share"
       screenOptions={{
-        headerStyle: {
-          backgroundColor: '#009387'
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: 'bold'
-        },
         headerShown: false
       }}
     >

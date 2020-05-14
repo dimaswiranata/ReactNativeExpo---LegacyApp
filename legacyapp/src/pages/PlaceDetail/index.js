@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Image, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity, Platform} from 'react-native';
 import { useDispatch } from 'react-redux';
 import { deletePlace } from '../../core/actions';
 import NavigationUtils from '../../utils/navigation.utils';
@@ -37,7 +37,7 @@ const PlaceDetail = ({ route, navigation }) => {
             <View style={styles.deleteButton}>
               <Icon
                 type= {'Ionicons'}
-                name= {'ios-trash'}
+                name= {Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
                 size= {30}
                 color= {'red'}
               />

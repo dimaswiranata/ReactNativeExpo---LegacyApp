@@ -23,13 +23,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import NavigationUtils from '../../utils/navigation.utils';
 
 export function DrawerContent({props}) {
-
-  const [isDarkTheme, setIsDarkTheme] = React.useState(false);
-
-  const toggleTheme = () => {
-    setIsDarkTheme(!isDarkTheme);
-  }
-  
   return(
     <View style={{flex:1}}>
       <DrawerContentScrollView {...props}>

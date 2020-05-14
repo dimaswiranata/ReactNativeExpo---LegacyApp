@@ -3,7 +3,8 @@ import {
   View,
   Text,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
+  Platform
 } from 'react-native';
 import styles from './styles';
 import PropTypes from 'prop-types';
@@ -91,7 +92,7 @@ const Header = ({
               onPress={openToggleDrawer}
             >
               <Icon 
-                name='md-menu' 
+                name={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'} 
                 type='Ionicons'
                 color={'#fff'} 
                 size={25}
