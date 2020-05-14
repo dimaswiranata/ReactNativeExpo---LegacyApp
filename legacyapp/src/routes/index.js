@@ -12,6 +12,7 @@ import Auth from '../pages/Auth';
 import DetailPlace from '../pages/PlaceDetail';
 import Icon from '../components/Icon';
 import { navigationRef } from '../utils/navigation.utils';
+import { DrawerContent } from '../pages/DrawerContent';
 
 const Tab = createBottomTabNavigator();
 const FindStack = createStackNavigator();
@@ -118,14 +119,18 @@ function DrawerRouter() {
   return (
     <Drawer.Navigator 
       initialRouteName='FindDrawer'
+      drawerContent={props => <DrawerContent {...props}/>}
     >
       <Drawer.Screen
         name="FindDrawer"
         component={TabRouter}
       />
       <Drawer.Screen
-        name="SideDrawer"
-        component={SideDrawer}
+        name="gotoAuth"
+        component={MainNavigator}
+        options={{ 
+          gestureEnabled: false
+        }}
       />
     </Drawer.Navigator>
   );
