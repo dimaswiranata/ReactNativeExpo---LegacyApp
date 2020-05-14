@@ -196,7 +196,8 @@ const styles = StyleSheet.create({
     margin: 5,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: 'white'
+    borderColor: 'white',
+    width: 300
   }
 })
 
