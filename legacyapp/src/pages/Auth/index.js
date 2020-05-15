@@ -23,7 +23,10 @@ class AuthScreen extends Component {
     showConfirmPassword: true,
     isValidUser: true,
     isValidPassword: true,
-    isValidConfirmPassword: true
+    isValidConfirmPassword: true,
+    buttonDisabledUser: false,
+    buttonDisabledPassword: false,
+    buttonDisabledConfirmPassword: false
   }
 
   constructor(props) {
@@ -33,6 +36,18 @@ class AuthScreen extends Component {
 
   componentWillUnmount() {
     Dimensions.removeEventListener("change", this.updateStyles);
+  }
+
+  checkDisabledButton(user, password, confirmPassword) {
+    let buttonEnabled = true;
+
+    if (user && password && confirmPassword){
+      buttonEnabled = false
+    } else {
+      buttonEnabled = true
+    }
+
+    return buttonEnabled;
   }
 
   updateStyles = dims => {
@@ -56,7 +71,7 @@ class AuthScreen extends Component {
     isValid = pattern.test(value);
 
     if (value.trim().length >= 0 ) {
-      this.setState({password: value, isValidUser: isValid});
+      this.setState({password: value, isValidUser: isValid, buttonDisabledUser: true});
     }
 
     if (value.trim().length >= 0 ) {
@@ -66,7 +81,7 @@ class AuthScreen extends Component {
 
   handlePasswordChange = (value) => {
     if (value.trim().length >= 6 ) {
-      this.setState({password: value, isValidPassword: true});
+      this.setState({password: value, isValidPassword: true, buttonDisabledPassword: true});
     } else {
       this.setState({password: value, isValidPassword: false});
     }
@@ -74,7 +89,7 @@ class AuthScreen extends Component {
 
   handleConfirmPasswordChange = (value) => {
     if (value.trim() === this.state.password ) {
-      this.setState({confirmPassword: value, isValidConfirmPassword: true});
+      this.setState({confirmPassword: value, isValidConfirmPassword: true, buttonDisabledConfirmPassword: true});
     } else {
       this.setState({confirmPassword: value, isValidConfirmPassword: false});
     }
@@ -185,7 +200,7 @@ class AuthScreen extends Component {
             title='Submit' 
             onPress={() => this.loginHandler()}
             buttonStyle={styles.button}
-            disabled={this.state.isValidConfirmPassword && this.state.isValidPassword && this.state.isValidUser}
+            disabled={this.checkDisabledButton(this.state.buttonDisabledUser, this.state.buttonDisabledPassword, this.state.buttonDisabledConfirmPassword)}
           />
         </View>
       </ImageBackground>
