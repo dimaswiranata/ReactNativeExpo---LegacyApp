@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ImageBackground } from 'react-native';
+import { 
+  View, 
+  Text, 
+  StyleSheet, 
+  TouchableOpacity, 
+  ImageBackground,
+  Dimensions
+} from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import NavigationUtils from '../../utils/navigation.utils';
 import ImageUtils from '../../utils/images.utils';
@@ -8,6 +15,7 @@ import Icon from '../../components/Icon';
 class AuthScreen extends Component {
 
   state = {
+    viewMode: Dimensions.get("window").height > 500 ? "portrait" : "landscape",
     email: '',
     password: '',
     confirmPassword: '',
@@ -17,6 +25,21 @@ class AuthScreen extends Component {
     isValidPassword: true,
     isValidConfirmPassword: true
   }
+
+  constructor(props) {
+    super(props);
+    Dimensions.addEventListener("change", this.updateStyles);
+  }
+
+  componentWillUnmount() {
+    Dimensions.removeEventListener("change", this.updateStyles);
+  }
+
+  updateStyles = dims => {
+    this.setState({
+      viewMode: dims.window.height > 500 ? "portrait" : "landscape"
+    });
+  };
 
   showPasswordHandler = () => {
     this.setState({showPassword: !this.state.showPassword});
@@ -31,6 +54,10 @@ class AuthScreen extends Component {
 
     const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
     isValid = pattern.test(value);
+
+    if (value.trim().length >= 0 ) {
+      this.setState({password: value, isValidUser: isValid});
+    }
 
     if (value.trim().length >= 0 ) {
       this.setState({password: value, isValidUser: isValid});
@@ -80,7 +107,7 @@ class AuthScreen extends Component {
                   size={24} 
                 />
               }
-              inputContainerStyle={styles.input}
+              inputContainerStyle={!this.state.isValidUser ? styles.invalidInput : styles.input}
             />
             <Input
               placeholder='Password'
@@ -115,9 +142,10 @@ class AuthScreen extends Component {
                   }
                 </TouchableOpacity>
               }
-              inputContainerStyle={styles.input}
+              inputContainerStyle={!this.state.isValidPassword ? styles.invalidInput : styles.input}
             />
             <Input
+              pointerEvents='none'
               placeholder='Confirm Password'
               secureTextEntry={!this.state.showConfirmPassword ? false : true}
               onChangeText={value => this.handleConfirmPasswordChange(value)}
@@ -150,13 +178,14 @@ class AuthScreen extends Component {
                   }
                 </TouchableOpacity>
               }
-              inputContainerStyle={styles.input}
+              inputContainerStyle={!this.state.isValidConfirmPassword ? styles.invalidInput : styles.input}
             />
           </View>
           <Button  
             title='Submit' 
             onPress={() => this.loginHandler()}
             buttonStyle={styles.button}
+            disabled={this.state.isValidConfirmPassword && this.state.isValidPassword && this.state.isValidUser}
           />
         </View>
       </ImageBackground>
@@ -189,6 +218,14 @@ const styles = StyleSheet.create({
     padding: 5,
     margin: 8,
     backgroundColor: '#eee',
+    borderRadius: 10
+  },
+  invalidInput: {
+    borderColor: 'red',
+    borderWidth: 1,
+    padding: 5,
+    margin: 8,
+    backgroundColor: '#f9c0c0',
     borderRadius: 10
   },
   button: {
