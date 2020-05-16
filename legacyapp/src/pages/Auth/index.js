@@ -52,10 +52,22 @@ class AuthScreen extends Component {
     });
   };
 
-  checkDisabledButton(user, password, confirmPassword) {
+  checkDisabledButtonSignup(user, password, confirmPassword) {
     let buttonEnabled = true;
 
     if (user && password && confirmPassword){
+      buttonEnabled = false
+    } else {
+      buttonEnabled = true
+    }
+
+    return buttonEnabled;
+  }
+
+  checkDisabledButtonLogin(user, password) {
+    let buttonEnabled = true;
+
+    if (user && password){
       buttonEnabled = false
     } else {
       buttonEnabled = true
@@ -115,7 +127,6 @@ class AuthScreen extends Component {
       password: this.state.password
     };
     this.props.onLogin(authData);
-    NavigationUtils.navigate('InApp');
   }
 
   render () {
@@ -226,7 +237,12 @@ class AuthScreen extends Component {
             title='Submit' 
             onPress={() => this.loginHandler()}
             buttonStyle={styles.button}
-            disabled={this.checkDisabledButton(this.state.buttonDisabledUser, this.state.buttonDisabledPassword, this.state.buttonDisabledConfirmPassword)}
+            disabled={this.state.authMode === 'signup' ? (
+              this.checkDisabledButtonSignup(this.state.buttonDisabledUser, this.state.buttonDisabledPassword, this.state.buttonDisabledConfirmPassword) 
+              ) : (
+              this.checkDisabledButtonLogin(this.state.buttonDisabledUser, this.state.buttonDisabledPassword)
+              )
+            }
           />
         </View>
       </ImageBackground>

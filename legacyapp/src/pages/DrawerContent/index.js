@@ -16,13 +16,22 @@ import {
 } from 'react-native-paper';
 import {
   DrawerContentScrollView,
-  DrawerItem
+  DrawerItem,
 } from '@react-navigation/drawer'
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../core/actions';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import NavigationUtils from '../../utils/navigation.utils';
 
 export function DrawerContent({props}) {
+  const dispatch = useDispatch();  
+
+  const savePlaceHandler = () => {
+    dispatch(logout());
+    NavigationUtils.closeDrawer();
+  };
+
   return(
     <View style={{flex:1}}>
       <DrawerContentScrollView {...props}>
@@ -37,14 +46,14 @@ export function DrawerContent({props}) {
                 />
               )}
               label='Sign Out'
-              onPress={() => NavigationUtils.navigate('gotoAuth')}
+              onPress={savePlaceHandler}
            />
           </Drawer.Section>
         </View>
       </DrawerContentScrollView>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   drawerContent: {

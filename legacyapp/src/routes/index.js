@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Platform } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { connect } from 'react-redux';
 
 import Storybook from '../../storybook';
 import SharePlace from '../pages/SharePlace';
@@ -109,13 +110,13 @@ function DrawerRouter() {
         name="FindDrawer"
         component={TabRouter}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name="gotoAuth"
         component={MainNavigator}
         options={{ 
           gestureEnabled: false
         }}
-      />
+      /> */}
     </Drawer.Navigator>
   );
 }
@@ -130,22 +131,37 @@ function MainNavigator() {
         name="Auth"
         component={Auth}
       />
-      <MainStack.Screen
+      {/* <MainStack.Screen
         name="Storybook"
         component={Storybook}
-      />
-      <MainStack.Screen
+      /> */}
+      {/* <MainStack.Screen
         name="InApp"
         component={DrawerRouter}
-      />
+      /> */}
     </MainStack.Navigator>
   );
 }
 
-export default function Router() {
-  return (
-    <NavigationContainer ref={navigationRef}>
-      <MainNavigator/>
-    </NavigationContainer>
-  );
+class Router extends Component {
+  render(){
+    return (
+      <NavigationContainer ref={navigationRef}>
+        {this.props.auth ? (
+            <MainNavigator/>
+          ) : (
+            <DrawerRouter/>
+          )
+        }
+      </NavigationContainer>
+    );
+  }
 };
+
+const mapStateToProps = state => {
+  return{
+    auth: state.auth.auth
+  };
+};
+
+export default connect(mapStateToProps, null)(Router);

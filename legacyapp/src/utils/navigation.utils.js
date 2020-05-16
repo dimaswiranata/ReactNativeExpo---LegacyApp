@@ -39,6 +39,12 @@ function openDrawer() {
   );
 }
 
+function closeDrawer() {
+  navigationRef.current?.dispatch(
+    DrawerActions.closeDrawer()
+  );
+}
+
 function resetAction(name, params = {}) {
   CommonActions.reset({
     index: 1,
@@ -55,5 +61,6 @@ export default {
   resetAction,
   logOutAction,
   replace,
-  openDrawer
+  openDrawer,
+  closeDrawer
 }
