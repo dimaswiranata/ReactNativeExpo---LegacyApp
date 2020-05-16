@@ -11,20 +11,45 @@ import PickLocation from '../../components/PickLocation';
 class SharePlace extends Component {
 
   state = {
-    placeName: ''
+    placeName: '',
+    isValidPlaceName: false,
+    buttonDisabledPlace: false,
+    location: null,
+    isValidLocation: false,
+    buttonDisabledLocation: false,
   }
 
   placeNameChangedHandler = (value) => {
     if (value.trim().length >= 0 ) {
-      this.setState({placeName: value});
+      this.setState({placeName: value, isValidPlaceName: true});
     }
   }
 
   placeAddedHandler = () => {
-    if (this.state.placeName.trim() !== ''){
-      this.props.onAddPlace(this.state.placeName);
-    }
+    this.props.onAddPlace(this.state.placeName, this.state.location);
   };
+
+  locationPickedHandler = location => {
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        location: location,
+        isValidLocation: true
+      }
+    });
+  }
+
+  checkDisabledButtonPlace(placeName, location) {
+    let buttonEnabled = true;
+
+    if (placeName && location){
+      buttonEnabled = false
+    } else {
+      buttonEnabled = true
+    }
+
+    return buttonEnabled;
+  }
 
   render () {
     return (
@@ -36,7 +61,7 @@ class SharePlace extends Component {
           <View style={styles.container}>
             <Text style={styles.textHeading}>Share a Place with us!</Text>
             <PickImage/>
-            <PickLocation/>
+            <PickLocation onLocationPick={this.locationPickedHandler}/>
             <Input
               placeholder='Place Name'
               inputContainerStyle={styles.input}
@@ -47,6 +72,7 @@ class SharePlace extends Component {
               <Button 
                 title='Share the Place!'
                 onPress={this.placeAddedHandler}
+                disabled={this.checkDisabledButtonPlace(this.state.placeName, this.state.location)}
               />
             </View>
           </View>
@@ -96,8 +122,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return{
-    onAddPlace: (name) => dispatch(addPlace(name)),
-    onDeletePlace: () => dispatch(deletePlace())
+    onAddPlace: (placeName, location) => dispatch(addPlace(placeName, location))
   };
 };
 

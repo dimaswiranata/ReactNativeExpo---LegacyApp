@@ -1,6 +1,7 @@
 import  React, { Component } from 'react';
 import { View, Text, Button, StyleSheet, Image, Dimensions } from 'react-native';
-import MapView from 'react-native-maps'
+import MapView from 'react-native-maps';
+import Geolocation from '@react-native-community/geolocation';
 
 class PickLocation extends Component {
 
@@ -31,6 +32,28 @@ class PickLocation extends Component {
         locationChosen: true
       };
     });
+    this.props.onLocationPick({
+      latitude: coords.latitude,
+      longitude: coords.longitude
+    });
+  }
+
+  getLocationHandler = () =>{
+    Geolocation.getCurrentPosition(pos => {
+      const coordsEvent = {
+        nativeEvent: {
+          coordinate: {
+            latitude: pos.coords.latitude,
+            longitude: pos.coords.longitude
+          }
+        }
+      };
+      this.pickLocationHandler(coordsEvent);
+    }, 
+    err => {
+      console.log(err);
+      alert('Fetching the Position failed, please pick one manually!')
+    })
   }
 
   render() {
@@ -55,7 +78,7 @@ class PickLocation extends Component {
         <View style={styles.button}>
           <Button 
             title='Locate Me'
-            onPress={() => alert('Pick Location!')}
+            onPress={this.getLocationHandler}
           />
         </View>
       </View>
