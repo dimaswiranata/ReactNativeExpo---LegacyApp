@@ -5,17 +5,23 @@ import {
   StyleSheet, 
   TouchableOpacity, 
   ImageBackground,
-  Dimensions
+  Dimensions,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback
 } from 'react-native';
 import { Input, Button } from 'react-native-elements';
+import { connect } from 'react-redux';
 import NavigationUtils from '../../utils/navigation.utils';
 import ImageUtils from '../../utils/images.utils';
 import Icon from '../../components/Icon';
+import { tryAuth } from '../../core/actions';
 
 class AuthScreen extends Component {
 
   state = {
     viewMode: Dimensions.get("window").height > 500 ? "portrait" : "landscape",
+    authMode: 'login',
     email: '',
     password: '',
     confirmPassword: '',
@@ -37,6 +43,14 @@ class AuthScreen extends Component {
   componentWillUnmount() {
     Dimensions.removeEventListener("change", this.updateStyles);
   }
+
+  switchAuthModeHandler = () => {
+    this.setState(prevState => {
+      return {
+        authMode: prevState.authMode === 'login' ? 'signup' : 'login'
+      };
+    });
+  };
 
   checkDisabledButton(user, password, confirmPassword) {
     let buttonEnabled = true;
@@ -96,106 +110,118 @@ class AuthScreen extends Component {
   }
 
   loginHandler= () => {
+    const authData = {
+      email: this.state.email,
+      password: this.state.password
+    };
+    this.props.onLogin(authData);
     NavigationUtils.navigate('InApp');
   }
 
   render () {
     return (
       <ImageBackground source={ImageUtils.BACKGROUND_IMG} style={styles.backgroundImage}>
-        <View style={styles.container}>
+        <View style={styles.container} behavior='padding'>
           <Text style={styles.textHeading}>Please Log In</Text>
           <Button  
-            title='Switch to Login'
+            title={`Switch to ${this.state.authMode === 'login' ? 'Sign Up' : 'Login'}`}
             buttonStyle={styles.button}
-            onPress={() => alert('Hello')}
+            onPress={this.switchAuthModeHandler}
           />
-          <View style={styles.inputContainer}>
-            <Input
-              placeholder='email@address.com'
-              onChangeText={value => this.handleEmailChange(value)}
-              errorMessage={!this.state.isValidUser ? 'Please enter a valid email address' : null}
-              leftIcon={
-                <Icon 
-                  name="mail" 
-                  type='Entypo' 
-                  color='gray' 
-                  size={24} 
-                />
-              }
-              inputContainerStyle={!this.state.isValidUser ? styles.invalidInput : styles.input}
-            />
-            <Input
-              placeholder='Password'
-              secureTextEntry={!this.state.showPassword ? false : true}
-              onChangeText={value => this.handlePasswordChange(value)}
-              errorMessage={!this.state.isValidPassword ? 'Password at least 6 characters' : null}
-              leftIcon={
-                <Icon 
-                  name="lock" 
-                  type='Entypo' 
-                  color='gray' 
-                  size={24} 
-                />
-              }
-              rightIcon={
-                <TouchableOpacity onPress={this.showPasswordHandler}>
-                  { !this.state.showPassword ? (
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View style={styles.inputContainer}>
+              <Input
+                placeholder='email@address.com'
+                keyboardType='email-address'
+                autoCapitalize='none'
+                autoCorrect={false}
+                onChangeText={value => this.handleEmailChange(value)}
+                errorMessage={!this.state.isValidUser ? 'Please enter a valid email address' : null}
+                leftIcon={
+                  <Icon 
+                    name="mail" 
+                    type='Entypo' 
+                    color='gray' 
+                    size={24} 
+                  />
+                }
+                inputContainerStyle={!this.state.isValidUser ? styles.invalidInput : styles.input}
+              />
+              <Input
+                placeholder='Password'
+                secureTextEntry={!this.state.showPassword ? false : true}
+                onChangeText={value => this.handlePasswordChange(value)}
+                errorMessage={!this.state.isValidPassword ? 'Password at least 6 characters' : null}
+                leftIcon={
+                  <Icon 
+                    name="lock" 
+                    type='Entypo' 
+                    color='gray' 
+                    size={24} 
+                  />
+                }
+                rightIcon={
+                  <TouchableOpacity onPress={this.showPasswordHandler}>
+                    { !this.state.showPassword ? (
+                      <Icon 
+                        name="md-eye"
+                        type='Ionicons' 
+                        color='gray' 
+                        size={24} 
+                      /> 
+                      ):(
+                      <Icon 
+                        name="md-eye-off"
+                        type='Ionicons' 
+                        color='gray' 
+                        size={24} 
+                      /> 
+                      )
+                    }
+                  </TouchableOpacity>
+                }
+                inputContainerStyle={!this.state.isValidPassword ? styles.invalidInput : styles.input}
+              />
+              { this.state.authMode === 'signup' ?
+                <Input
+                  placeholder='Confirm Password'
+                  secureTextEntry={!this.state.showConfirmPassword ? false : true}
+                  onChangeText={value => this.handleConfirmPasswordChange(value)}
+                  errorMessage={!this.state.isValidConfirmPassword ? 'The confirmation and password do not match' : null}
+                  leftIcon={
                     <Icon 
-                      name="md-eye"
-                      type='Ionicons' 
+                      name="lock" 
+                      type='Entypo' 
                       color='gray' 
                       size={24} 
-                    /> 
-                    ):(
-                    <Icon 
-                      name="md-eye-off"
-                      type='Ionicons' 
-                      color='gray' 
-                      size={24} 
-                    /> 
-                    )
+                    />
                   }
-                </TouchableOpacity>
-              }
-              inputContainerStyle={!this.state.isValidPassword ? styles.invalidInput : styles.input}
-            />
-            <Input
-              pointerEvents='none'
-              placeholder='Confirm Password'
-              secureTextEntry={!this.state.showConfirmPassword ? false : true}
-              onChangeText={value => this.handleConfirmPasswordChange(value)}
-              errorMessage={!this.state.isValidConfirmPassword ? 'The confirmation and password do not match' : null}
-              leftIcon={
-                <Icon 
-                  name="lock" 
-                  type='Entypo' 
-                  color='gray' 
-                  size={24} 
-                />
-              }
-              rightIcon={
-                <TouchableOpacity onPress={this.showConfirmPasswordHandler}>
-                  { !this.state.showConfirmPassword ? (
-                    <Icon 
-                      name="md-eye"
-                      type='Ionicons' 
-                      color='gray' 
-                      size={24} 
-                    /> 
-                    ):(
-                    <Icon 
-                      name="md-eye-off"
-                      type='Ionicons' 
-                      color='gray' 
-                      size={24} 
-                    /> 
-                    )
+                  rightIcon={
+                    <TouchableOpacity onPress={this.showConfirmPasswordHandler}>
+                      { !this.state.showConfirmPassword ? (
+                        <Icon 
+                          name="md-eye"
+                          type='Ionicons' 
+                          color='gray' 
+                          size={24} 
+                        /> 
+                        ):(
+                        <Icon 
+                          name="md-eye-off"
+                          type='Ionicons' 
+                          color='gray' 
+                          size={24} 
+                        /> 
+                        )
+                      }
+                    </TouchableOpacity>
                   }
-                </TouchableOpacity>
+                  inputContainerStyle={!this.state.isValidConfirmPassword ? styles.invalidInput : styles.input}
+                />
+                : null
               }
-              inputContainerStyle={!this.state.isValidConfirmPassword ? styles.invalidInput : styles.input}
-            />
-          </View>
+            </View>
+          </TouchableWithoutFeedback>
           <Button  
             title='Submit' 
             onPress={() => this.loginHandler()}
@@ -253,4 +279,16 @@ const styles = StyleSheet.create({
   }
 })
 
-export default AuthScreen;
+const mapStateToProps = state => {
+  return{
+    //
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return{
+    onLogin: (authData) => dispatch(tryAuth(authData))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen);
