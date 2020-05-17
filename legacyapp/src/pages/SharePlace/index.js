@@ -16,7 +16,9 @@ class SharePlace extends Component {
     buttonDisabledPlace: false,
     location: null,
     isValidLocation: false,
-    buttonDisabledLocation: false,
+    image: null,
+    isValidImage: false,
+    buttonDisabledLocation: false
   }
 
   placeNameChangedHandler = (value) => {
@@ -26,7 +28,17 @@ class SharePlace extends Component {
   }
 
   placeAddedHandler = () => {
-    this.props.onAddPlace(this.state.placeName, this.state.location);
+    this.props.onAddPlace(this.state.placeName, this.state.location, this.state.image);
+    this.setState(prevState => { 
+        return {
+          ...prevState, 
+          placeName: '', 
+          location: null, 
+          image: null, 
+          isValidPlaceName: false
+        }
+      }
+    );
   };
 
   locationPickedHandler = location => {
@@ -35,14 +47,24 @@ class SharePlace extends Component {
         ...prevState,
         location: location,
         isValidLocation: true
-      }
+      };
     });
   }
 
-  checkDisabledButtonPlace(placeName, location) {
+  imagePickedHandler = image => {
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        image: image,
+        isValidImage: true
+      };
+    });
+  }
+
+  checkDisabledButtonPlace(placeName, location, image) {
     let buttonEnabled = true;
 
-    if (placeName && location){
+    if (placeName && location && image){
       buttonEnabled = false
     } else {
       buttonEnabled = true
@@ -60,7 +82,7 @@ class SharePlace extends Component {
         <ScrollView>
           <View style={styles.container}>
             <Text style={styles.textHeading}>Share a Place with us!</Text>
-            <PickImage/>
+            <PickImage onImagePicked={this.imagePickedHandler}/>
             <PickLocation onLocationPick={this.locationPickedHandler}/>
             <Input
               placeholder='Place Name'
@@ -72,7 +94,7 @@ class SharePlace extends Component {
               <Button 
                 title='Share the Place!'
                 onPress={this.placeAddedHandler}
-                disabled={this.checkDisabledButtonPlace(this.state.placeName, this.state.location)}
+                disabled={this.checkDisabledButtonPlace(this.state.isValidPlaceName, this.state.isValidLocation, this.state.isValidImage)}
               />
             </View>
           </View>
@@ -122,7 +144,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return{
-    onAddPlace: (placeName, location) => dispatch(addPlace(placeName, location))
+    onAddPlace: (placeName, location, image) => dispatch(addPlace(placeName, location, image))
   };
 };
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { View, Image, Text, StyleSheet, TouchableOpacity, Platform} from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity, Platform, Dimensions} from 'react-native';
+import MapView from "react-native-maps";
 import { useDispatch } from 'react-redux';
 import { deletePlace } from '../../core/actions';
 import NavigationUtils from '../../utils/navigation.utils';
@@ -16,7 +17,7 @@ const PlaceDetail = ({ route, navigation }) => {
 
   const placeDeletedHandler = () => {
     dispatch(deletePlace(selectedPlace.key));
-    NavigationUtils.navigate('InApp');
+    NavigationUtils.navigate('Find');
   }
 
   return (
@@ -26,14 +27,31 @@ const PlaceDetail = ({ route, navigation }) => {
         backButton={ true }
       />
       <View style={styles.container}>
-        <View>
-          <Image source={{uri : selectedPlace.image}} style={styles.placeImage}/>
+        <View style={styles.placeDetailContainer}>
+          <View style={styles.subContainer}>
+            <Image 
+              source={selectedPlace.image} 
+              style={styles.placeImage}
+            />
+          </View>
+          <View style={styles.subContainer}>
+            <MapView
+              initialRegion={{
+                ...selectedPlace.location, 
+                latitudeDelta: 0.0122,
+                longitudeDelta:
+                  Dimensions.get("window").width /
+                  Dimensions.get("window").height *
+                  0.0122}}
+              style={styles.map}
+            >
+              <MapView.Marker coordinate={selectedPlace.location} />
+            </MapView>
+          </View>
           <Text style={styles.placeName}>{selectedPlace.name}</Text>
         </View>
         <View>
-          <TouchableOpacity onPress={placeDeletedHandler}
-          >
-          {/* <TouchableOpacity> */}
+          <TouchableOpacity onPress={placeDeletedHandler}>
             <View style={styles.deleteButton}>
               <Icon
                 type= {'Ionicons'}
@@ -51,20 +69,36 @@ const PlaceDetail = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    margin: 22
+    margin: 22,
+    flex: 1
   },
-  placeImage : {
-    width: '100%',
-    height: 300
+  portraitContainer: {
+    flexDirection: "column"
+  },
+  landscapeContainer: {
+    flexDirection: "row"
+  },
+  placeDetailContainer: {
+    flex: 2
+  },
+  placeImage: {
+    width: "100%",
+    height: "100%"
   },
   placeName: {
-    fontWeight: 'bold',
-    textAlign: 'center',
+    fontWeight: "bold",
+    textAlign: "center",
     fontSize: 28
   },
+  map: {
+    ...StyleSheet.absoluteFillObject
+  },
   deleteButton: {
-    alignItems: 'center'
+    alignItems: "center"
+  },
+  subContainer: {
+    flex: 1
   }
-})
+});
 
 export default PlaceDetail;

@@ -9,7 +9,7 @@ export default function ListItem({ placeImage, placeName, onItemPressed }) {
         {/* static image */}
         {/* <Image resizeMode='cover' style={styles.placeImage} source={placeImage}/> */}
         {/* network image */}
-        <Image resizeMode='cover' style={styles.placeImage} source={{uri : placeImage}}/>
+        <Image resizeMode='cover' style={styles.placeImage} source={placeImage}/>
         <Text>{placeName}</Text>
       </View>
     </TouchableOpacity>

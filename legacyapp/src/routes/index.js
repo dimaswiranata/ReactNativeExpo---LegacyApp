@@ -72,9 +72,6 @@ const FindStackRouter = () => {
       <FindStack.Screen
         name="Find"
         component={FindPlace}
-        options={{
-          title: 'Find Place'
-        }}
       />
       <FindStack.Screen
         name="Detail"
