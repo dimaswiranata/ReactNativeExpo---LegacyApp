@@ -21,6 +21,16 @@ class SharePlace extends Component {
     buttonDisabledLocation: false
   }
 
+  componentDidMount(){
+    console.log('did mount');
+    this.setState({ 
+      placeName: '', 
+      location: null, 
+      image: null, 
+      isValidPlaceName: false
+    });
+  }
+
   placeNameChangedHandler = (value) => {
     if (value.trim().length >= 0 ) {
       this.setState({placeName: value, isValidPlaceName: true});
@@ -28,7 +38,11 @@ class SharePlace extends Component {
   }
 
   placeAddedHandler = () => {
-    this.props.onAddPlace(this.state.placeName, this.state.location, this.state.image);
+    this.props.onAddPlace(
+      this.state.placeName, 
+      this.state.location, 
+      this.state.image
+    );
     this.setState(prevState => { 
         return {
           ...prevState, 
@@ -71,6 +85,15 @@ class SharePlace extends Component {
     }
 
     return buttonEnabled;
+  }
+
+  componentWillUnMount(){
+    this.setState({ 
+      placeName: '', 
+      location: null, 
+      image: null, 
+      isValidPlaceName: false
+    });
   }
 
   render () {
