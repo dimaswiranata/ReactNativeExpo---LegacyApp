@@ -11,7 +11,7 @@ import Header from '../../components/Header';
 
 const PlaceDetail = ({ route, navigation }) => {
 
-  const { selectedPlace } = route.params;
+  const { selPlace } = route.params;
 
   const dispatch = useDispatch();
 
@@ -23,21 +23,21 @@ const PlaceDetail = ({ route, navigation }) => {
   return (
     <>
       <Header
-        title={selectedPlace.name}
+        title={selPlace.name}
         backButton={ true }
       />
       <View style={styles.container}>
         <View style={styles.placeDetailContainer}>
           <View style={styles.subContainer}>
             <Image 
-              source={selectedPlace.image} 
+              source={selPlace.image} 
               style={styles.placeImage}
             />
           </View>
           <View style={styles.subContainer}>
             <MapView
               initialRegion={{
-                ...selectedPlace.location, 
+                ...selPlace.location, 
                 latitudeDelta: 0.0122,
                 longitudeDelta:
                   Dimensions.get("window").width /
@@ -45,10 +45,10 @@ const PlaceDetail = ({ route, navigation }) => {
                   0.0122}}
               style={styles.map}
             >
-              <MapView.Marker coordinate={selectedPlace.location} />
+              <MapView.Marker coordinate={selPlace.location} />
             </MapView>
           </View>
-          <Text style={styles.placeName}>{selectedPlace.name}</Text>
+          <Text style={styles.placeName}>{selPlace.name}</Text>
         </View>
         <View>
           <TouchableOpacity onPress={placeDeletedHandler}>

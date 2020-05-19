@@ -45,13 +45,13 @@ class FindPlace extends Component {
     this.placesLoadedHandler();
   };
 
-  itemSelectecdHandler = key => {
+  itemSelectecdHandler = id => {
     const selPlace = this.props.places.find(place => {
-      return place.key === key;
+      return place.id === id;
     })
 
     NavigationUtils.navigate('Detail', {
-      selectedPlace: selPlace
+      selPlace
     })
   };
 

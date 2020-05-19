@@ -6,9 +6,6 @@ export default function ListItem({ placeImage, placeName, onItemPressed }) {
   return (
     <TouchableOpacity onPress={onItemPressed}>
       <View style={styles.listItem}>
-        {/* static image */}
-        {/* <Image resizeMode='cover' style={styles.placeImage} source={placeImage}/> */}
-        {/* network image */}
         <Image resizeMode='cover' style={styles.placeImage} source={placeImage}/>
         <Text>{placeName}</Text>
       </View>
