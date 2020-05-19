@@ -1,7 +1,7 @@
 import { TRY_AUTH, LOG_OUT } from '../../type/auth';
 
 const initialState = {
-  auth: true
+  isAuth: true
 };
 
 const Reducer = (state = initialState, action) => {
@@ -9,12 +9,12 @@ const Reducer = (state = initialState, action) => {
     case TRY_AUTH:
       return {
         ...state,
-        auth: false
+        isAuth: false
       };
     case LOG_OUT:
       return {
         ...state,
-        auth: true
+        isAuth: true
       };
     default:
       return state;

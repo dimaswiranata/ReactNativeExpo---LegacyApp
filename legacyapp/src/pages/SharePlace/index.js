@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Input } from 'react-native-elements';
 import { connect } from 'react-redux';
-import {addPlace, deletePlace } from '../../core/actions';
+import { addPlace, deletePlace } from '../../core/actions';
 
 import Header from '../../components/Header';
 import PickImage from '../../components/PickImage';

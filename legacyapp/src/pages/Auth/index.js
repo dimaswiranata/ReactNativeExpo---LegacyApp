@@ -8,14 +8,15 @@ import {
   Dimensions,
   KeyboardAvoidingView,
   Keyboard,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  ActivityIndicator
 } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import NavigationUtils from '../../utils/navigation.utils';
 import ImageUtils from '../../utils/images.utils';
 import Icon from '../../components/Icon';
-import { tryAuth } from '../../core/actions';
+import { authSignup } from '../../core/actions';
 
 class AuthScreen extends Component {
 
@@ -97,11 +98,11 @@ class AuthScreen extends Component {
     isValid = pattern.test(value);
 
     if (value.trim().length >= 0 ) {
-      this.setState({password: value, isValidUser: isValid, buttonDisabledUser: true});
+      this.setState({email: value, isValidUser: isValid, buttonDisabledUser: true});
     }
 
     if (value.trim().length >= 0 ) {
-      this.setState({password: value, isValidUser: isValid});
+      this.setState({email: value, isValidUser: isValid});
     }
   }
 
@@ -126,6 +127,7 @@ class AuthScreen extends Component {
       email: this.state.email,
       password: this.state.password
     };
+    console.log(authData);
     this.props.onLogin(authData);
   }
 
@@ -233,17 +235,22 @@ class AuthScreen extends Component {
               }
             </View>
           </TouchableWithoutFeedback>
-          <Button  
-            title='Submit' 
-            onPress={() => this.loginHandler()}
-            buttonStyle={styles.button}
-            disabled={this.state.authMode === 'signup' ? (
-              this.checkDisabledButtonSignup(this.state.buttonDisabledUser, this.state.buttonDisabledPassword, this.state.buttonDisabledConfirmPassword) 
-              ) : (
-              this.checkDisabledButtonLogin(this.state.buttonDisabledUser, this.state.buttonDisabledPassword)
-              )
-            }
-          />
+          { !this.props.isLoading ? (
+              <Button  
+                title='Submit' 
+                onPress={() => this.loginHandler()}
+                buttonStyle={styles.button}
+                disabled={this.state.authMode === 'signup' ? (
+                  this.checkDisabledButtonSignup(this.state.buttonDisabledUser, this.state.buttonDisabledPassword, this.state.buttonDisabledConfirmPassword) 
+                  ) : (
+                  this.checkDisabledButtonLogin(this.state.buttonDisabledUser, this.state.buttonDisabledPassword)
+                  )
+                }
+              /> 
+            ) : (
+              <ActivityIndicator/>
+            ) 
+          }
         </View>
       </ImageBackground>
     );
@@ -297,13 +304,13 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return{
-    //
+    isLoading: state.ui.isLoading
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return{
-    onLogin: (authData) => dispatch(tryAuth(authData))
+    onLogin: (authData) => dispatch(authSignup(authData))
   };
 };
 

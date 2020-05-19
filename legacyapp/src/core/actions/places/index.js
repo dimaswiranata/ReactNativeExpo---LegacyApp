@@ -1,5 +1,5 @@
 import { SET_PLACES } from '../../type/places';
-import { uiStartLoading, uiStopLoading } from '../index'
+import { uiStartLoading, uiStopLoading } from '../index';
 
 export const addPlace = (placeName, location, image) => {
   return dispatch => {

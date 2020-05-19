@@ -144,7 +144,7 @@ class Router extends Component {
   render(){
     return (
       <NavigationContainer ref={navigationRef}>
-        {this.props.auth ? (
+        {this.props.isAuth ? (
             <MainNavigator/>
           ) : (
             <DrawerRouter/>
@@ -157,7 +157,7 @@ class Router extends Component {
 
 const mapStateToProps = state => {
   return{
-    auth: state.auth.auth
+    isAuth: state.auth.isAuth
   };
 };
 
