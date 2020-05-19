@@ -1,2 +1,3 @@
-export {addPlace, deletePlace} from './places';
+export { getPlaces } from './places';
 export { tryAuth, logout } from './auth';
+export { uiStartLoading, uiStopLoading } from './UI';

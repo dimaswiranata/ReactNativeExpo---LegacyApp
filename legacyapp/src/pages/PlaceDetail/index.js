@@ -11,7 +11,7 @@ import Header from '../../components/Header';
 
 const PlaceDetail = ({ route, navigation }) => {
 
-  const { title, selectedPlace } = route.params;
+  const { selectedPlace } = route.params;
 
   const dispatch = useDispatch();
 
@@ -23,7 +23,7 @@ const PlaceDetail = ({ route, navigation }) => {
   return (
     <>
       <Header
-        title={title}
+        title={selectedPlace.name}
         backButton={ true }
       />
       <View style={styles.container}>

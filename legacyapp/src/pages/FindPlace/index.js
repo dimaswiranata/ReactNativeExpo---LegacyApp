@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 import Header from '../../components/Header';
 import PlaceList from '../../components/PlaceList';
 import NavigationUtils from '../../utils/navigation.utils';
+import { getPlaces } from '../../core/actions'
 
 class FindPlace extends Component {
 
@@ -18,6 +19,10 @@ class FindPlace extends Component {
     placesLoaded: false,
     removeAnim: new Animated.Value(1),
     placesAnim: new Animated.Value(0)
+  }
+
+  componentDidMount() {
+    this.props.onLoadplaces();
   }
 
   placesLoadedHandler = () => {
@@ -46,7 +51,6 @@ class FindPlace extends Component {
     })
 
     NavigationUtils.navigate('Detail', {
-      title: selPlace.name,
       selectedPlace: selPlace
     })
   };
@@ -130,7 +134,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return{
-    onAddPlace: (name) => dispatch(addPlace(name))
+    onLoadplaces: () => dispatch(getPlaces())
   };
 };
 

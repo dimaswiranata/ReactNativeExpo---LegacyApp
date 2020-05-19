@@ -1,5 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, Image ,Button, StyleSheet, ScrollView } from 'react-native';
+import { 
+  View, 
+  Text, 
+  Image,
+  Button, 
+  StyleSheet, 
+  ScrollView,
+  ActivityIndicator 
+} from 'react-native';
 import { Input } from 'react-native-elements';
 import { connect } from 'react-redux';
 import {addPlace, deletePlace } from '../../core/actions';
@@ -97,6 +105,18 @@ class SharePlace extends Component {
   }
 
   render () {
+    let submitButton = (
+      <Button 
+        title='Share the Place!'
+        onPress={this.placeAddedHandler}
+        disabled={this.checkDisabledButtonPlace(this.state.isValidPlaceName, this.state.isValidLocation, this.state.isValidImage)}
+      />
+    );
+
+    if (this.props.isLoading){
+      submitButton= <ActivityIndicator/>;
+    }
+
     return (
       <>
         <Header 
@@ -114,11 +134,7 @@ class SharePlace extends Component {
               onChangeText={value => this.placeNameChangedHandler(value)}
             />
             <View style={styles.button}>
-              <Button 
-                title='Share the Place!'
-                onPress={this.placeAddedHandler}
-                disabled={this.checkDisabledButtonPlace(this.state.isValidPlaceName, this.state.isValidLocation, this.state.isValidImage)}
-              />
+              {submitButton}
             </View>
           </View>
         </ScrollView>
@@ -161,7 +177,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return{
-    places: state.places.places
+    isLoading: state.ui.isLoading
   };
 };
 
