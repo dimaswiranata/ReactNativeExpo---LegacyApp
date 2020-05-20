@@ -16,7 +16,7 @@ import { connect } from 'react-redux';
 import NavigationUtils from '../../utils/navigation.utils';
 import ImageUtils from '../../utils/images.utils';
 import Icon from '../../components/Icon';
-import { authSignup } from '../../core/actions';
+import { tryAuth } from '../../core/actions';
 
 class AuthScreen extends Component {
 
@@ -122,13 +122,13 @@ class AuthScreen extends Component {
     }
   }
 
-  loginHandler= () => {
+  authHandler = () => {
     const authData = {
       email: this.state.email,
       password: this.state.password
     };
     console.log(authData);
-    this.props.onLogin(authData);
+    this.props.onTryAuth(authData, this.state.authMode);
   }
 
   render () {
@@ -238,7 +238,7 @@ class AuthScreen extends Component {
           { !this.props.isLoading ? (
               <Button  
                 title='Submit' 
-                onPress={() => this.loginHandler()}
+                onPress={() => this.authHandler()}
                 buttonStyle={styles.button}
                 disabled={this.state.authMode === 'signup' ? (
                   this.checkDisabledButtonSignup(this.state.buttonDisabledUser, this.state.buttonDisabledPassword, this.state.buttonDisabledConfirmPassword) 
@@ -310,7 +310,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return{
-    onLogin: (authData) => dispatch(authSignup(authData))
+    onTryAuth: (authData, authMode ) => dispatch(tryAuth(authData, authMode))
   };
 };
 
