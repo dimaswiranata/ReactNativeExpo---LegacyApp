@@ -45,9 +45,9 @@ class FindPlace extends Component {
     this.placesLoadedHandler();
   };
 
-  itemSelectecdHandler = id => {
+  itemSelectecdHandler = key => {
     const selPlace = this.props.places.find(place => {
-      return place.id === id;
+      return place.key === key;
     })
 
     NavigationUtils.navigate('Detail', {

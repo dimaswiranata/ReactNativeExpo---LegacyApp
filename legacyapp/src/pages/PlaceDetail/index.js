@@ -16,7 +16,7 @@ const PlaceDetail = ({ route, navigation }) => {
   const dispatch = useDispatch();
 
   const placeDeletedHandler = () => {
-    dispatch(deletePlace(selectedPlace.key));
+    dispatch(deletePlace(selPlace.key));
     NavigationUtils.navigate('Find');
   }
 

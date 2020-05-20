@@ -12,10 +12,10 @@ export default function PlaceList({ places, onItemSelected }) {
         <ListItem
           placeName={info.item.name}
           placeImage={info.item.image}
-          onItemPressed={() => onItemSelected(info.item.id)}
+          onItemPressed={() => onItemSelected(info.item.key)}
         />
       )}
-      keyExtractor={item => item.id}   
+      keyExtractor={item => item.key}   
     />
   );
 }

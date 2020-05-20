@@ -1,4 +1,4 @@
-import { SET_PLACES } from '../../type/places';
+import { SET_PLACES, REMOVE_PLACE } from '../../type/places';
 import { uiStartLoading, uiStopLoading } from '../index';
 
 export const addPlace = (placeName, location, image) => {
@@ -29,14 +29,14 @@ export const addPlace = (placeName, location, image) => {
         })
       );
     })
-    .catch(err => {
-      console.log(err);
-      alert('Something went wrong, please try again!');
-      dispatch(uiStopLoading());
-    })
     .then(res => res.json())
     .then(parsedRes => {
       console.log(parsedRes);
+      dispatch(uiStopLoading());
+    })
+    .catch(err => {
+      console.log(err);
+      alert('Something went wrong, please try again!');
       dispatch(uiStopLoading());
     });
   };
@@ -45,10 +45,6 @@ export const addPlace = (placeName, location, image) => {
 export const getPlaces = () => {
   return dispatch => {
     fetch('https://awesome-place-app-277412.firebaseio.com/places.json')
-    .catch(err => {
-      alert('Something went wrong, sorry :/');
-      console.log(err);
-    })
     .then(res => res.json())
     .then(parsedRes => {
       const places = [];
@@ -58,10 +54,14 @@ export const getPlaces = () => {
           image: {
             uri: parsedRes[key].image
           },
-          id: key
+          key: key
         });
       }
       dispatch(setPlaces(places));
+    })
+    .catch(err => {
+      alert('Something went wrong, sorry :/');
+      console.log(err);
     });
   };
 };
@@ -73,9 +73,26 @@ export const setPlaces = places => {
   };
 };
 
-// export const deletePlace = (key) => {
-//   return {
-//     type : DELETE_PLACE,
-//     placeKey : key
-//   };
-// };
+export const deletePlace = (key) => {
+  return dispatch => {
+    dispatch(removePlace(key));
+    fetch("https://awesome-place-app-277412.firebaseio.com/places/" + key + ".json", {
+      method: "DELETE"
+    }) 
+    .then(res => res.json())
+    .then(parsedRes => {
+      console.log("Done!");
+    })
+    .catch(err => {
+      alert("Something went wrong, sorry :/");
+      console.log(err);
+    });
+  };
+};
+
+export const removePlace = key => {
+  return {
+    type: REMOVE_PLACE,
+    key: key
+  };
+};
