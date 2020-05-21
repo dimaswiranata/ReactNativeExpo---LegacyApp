@@ -1,7 +1,8 @@
-import { TRY_AUTH, LOG_OUT } from '../../type/auth';
+import { TRY_AUTH, LOG_OUT, AUTH_SET_TOKEN } from '../../type/auth';
 
 const initialState = {
-  isAuth: true
+  isAuth: true,
+  token: null
 };
 
 const Reducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const Reducer = (state = initialState, action) => {
       return {
         ...state,
         isAuth: false
+      };
+    case AUTH_SET_TOKEN:
+      return {
+        ...state,
+        token: action.token
       };
     case LOG_OUT:
       return {

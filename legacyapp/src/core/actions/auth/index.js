@@ -1,4 +1,4 @@
-import { TRY_AUTH, LOG_OUT } from '../../type/auth';
+import { TRY_AUTH, LOG_OUT, AUTH_SET_TOKEN } from '../../type/auth';
 import { uiStartLoading, uiStopLoading } from '../index';
 
 export const tryAuth = (authData, authMode) => {
@@ -39,10 +39,12 @@ export const authSignup = (authData) => {
     .then(res => res.json())
     .then(parsedRes =>{
       dispatch(uiStopLoading());
-      if (parsedRes.error){
+      console.log(parsedRes);
+      if (!parsedRes.idToken){
         alert('Authentication failed, please try again!');
       } else {
         dispatch(gotoApp());
+        dispatch(authSetToken(parsedRes.idToken));
       }
     });
   };
@@ -69,13 +71,36 @@ export const authSignin = (authData) => {
     })
     .then(res => res.json())
     .then(parsedRes =>{
+      console.log(parsedRes);
       dispatch(uiStopLoading());
-      if (parsedRes.error){
+      if (!parsedRes.idToken){
         alert('Authentication failed, please try again!');
       } else {
         dispatch(gotoApp());
+        dispatch(authSetToken(parsedRes.idToken));
       }
     });
+  };
+};
+
+export const authSetToken = (token) => {
+  return {
+    type: AUTH_SET_TOKEN,
+    token: token
+  };
+};
+
+export const authGetToken = () => {
+  return (dispatch, getState) => {
+    const promise = new Promise((resolve, reject) => {
+      const token = getState().auth.token;
+      if (!token) {
+        reject();
+      } else {
+        resolve(token);
+      }
+    });
+    return promise;
   };
 };
 

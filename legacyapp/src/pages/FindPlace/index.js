@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import Header from '../../components/Header';
 import PlaceList from '../../components/PlaceList';
 import NavigationUtils from '../../utils/navigation.utils';
-import { getPlaces } from '../../core/actions'
+import { getPlaces } from '../../core/actions';
 
 class FindPlace extends Component {
 
