@@ -58,16 +58,42 @@ export const addPlace = (placeName, location, image) => {
   };
 };
 
+// export const getPlaces = () => {
+//   return (dispatch, getState) => {
+//     const token = getState().auth.token;
+//     if (!token){
+//       return;
+//     }
+//     fetch("https://awesome-place-app-277412.firebaseio.com/places/.json?auth=" + token)
+//     .then(res => res.json())
+//     .then(parsedRes => {
+//       const places = [];
+//       for (let key in parsedRes) {
+//         places.push({
+//           ...parsedRes[key],
+//           image: {
+//             uri: parsedRes[key].image
+//           },
+//           key: key
+//         });
+//       }
+//       dispatch(setPlaces(places));
+//     })
+//     .catch(err => {
+//       alert("Something went wrong, sorry :/");
+//       console.log(err);
+//     });
+//   };
+// };
+
 export const getPlaces = () => {
   return dispatch => {
     dispatch(authGetToken())
       .then(token => {
         return fetch(
           "https://awesome-place-app-277412.firebaseio.com/places.json?auth=" +
-            token
-        ,{
-          method: 'GET'
-        });
+          token
+        );
       })
       .catch(() => {
         alert("No valid token found!");

@@ -132,10 +132,10 @@ function MainNavigator() {
         name="Storybook"
         component={Storybook}
       /> */}
-      {/* <MainStack.Screen
+      <MainStack.Screen
         name="InApp"
         component={DrawerRouter}
-      /> */}
+      />
     </MainStack.Navigator>
   );
 }
