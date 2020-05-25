@@ -22,7 +22,7 @@ class FindPlace extends Component {
   }
 
   componentDidMount() {
-    this.props.onLoadplaces();
+    this.props.onLoadPlaces();
   }
 
   placesLoadedHandler = () => {
@@ -134,7 +134,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return{
-    onLoadplaces: () => dispatch(getPlaces())
+    onLoadPlaces: () => dispatch(getPlaces())
   };
 };
 

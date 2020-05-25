@@ -18,24 +18,41 @@ import PickLocation from '../../components/PickLocation';
 
 class SharePlace extends Component {
 
-  state = {
-    placeName: '',
-    isValidPlaceName: false,
-    buttonDisabledPlace: false,
-    location: null,
-    isValidLocation: false,
-    image: null,
-    isValidImage: false,
-    buttonDisabledLocation: false
+  // state = {
+  //   placeName: '',
+  //   isValidPlaceName: false,
+  //   buttonDisabledPlace: false,
+  //   location: null,
+  //   isValidLocation: false,
+  //   image: null,
+  //   isValidImage: false,
+  //   buttonDisabledLocation: false
+  // }
+
+  // componentDidMount(){
+  //   console.log('did mount');
+  //   this.setState({ 
+  //     placeName: '', 
+  //     location: null, 
+  //     image: null, 
+  //     isValidPlaceName: false
+  //   });
+  // }
+
+  componentWillMount() {
+    this.reset();
   }
 
-  componentDidMount(){
-    console.log('did mount');
-    this.setState({ 
-      placeName: '', 
-      location: null, 
-      image: null, 
-      isValidPlaceName: false
+  reset = () => {
+    this.setState({
+      placeName: '',
+      isValidPlaceName: false,
+      buttonDisabledPlace: false,
+      location: null,
+      isValidLocation: false,
+      image: null,
+      isValidImage: false,
+      buttonDisabledLocation: false
     });
   }
 
@@ -51,16 +68,7 @@ class SharePlace extends Component {
       this.state.location, 
       this.state.image
     );
-    this.setState(prevState => { 
-        return {
-          ...prevState, 
-          placeName: '', 
-          location: null, 
-          image: null, 
-          isValidPlaceName: false
-        }
-      }
-    );
+    this.reset();
   };
 
   locationPickedHandler = location => {
@@ -93,15 +101,6 @@ class SharePlace extends Component {
     }
 
     return buttonEnabled;
-  }
-
-  componentWillUnMount(){
-    this.setState({ 
-      placeName: '', 
-      location: null, 
-      image: null, 
-      isValidPlaceName: false
-    });
   }
 
   render () {
