@@ -47,7 +47,8 @@ export const addPlace = (placeName, location, image) => {
         const placeData = {
           name: placeName,
           location: location,
-          image: parsedRes.imageUrl
+          image: parsedRes.imageUrl,
+          imagePath: parsedRes.imagePath
         };
         return fetch(
           "https://awesome-place-app-277412.firebaseio.com/places.json?auth=" +
@@ -102,6 +103,7 @@ export const addPlace = (placeName, location, image) => {
 
 export const getPlaces = () => {
   return dispatch => {
+    dispatch(uiStartLoading());
     dispatch(authGetToken())
       .then(token => {
         return fetch(
@@ -125,10 +127,12 @@ export const getPlaces = () => {
           });
         }
         dispatch(setPlaces(places));
+        dispatch(uiStopLoading());
       })
       .catch(err => {
         alert("Something went wrong, sorry :/");
         console.log(err);
+        dispatch(uiStopLoading());
       });
   };
 };

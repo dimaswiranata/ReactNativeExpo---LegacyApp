@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 ListItem.propTypes = {  
   placeName: PropTypes.string,
   onItemPressed : PropTypes.func,
-  placeImage: PropTypes.string
+  placeImage: PropTypes.object
 }
 
 ListItem.defaultProps = {

@@ -40,6 +40,7 @@ class FindPlace extends Component {
       duration: 500,
       useNativeDriver: true
     }).start(() => {
+      this.props.onLoadPlaces();
       this.setState({placesLoaded: true});
       this.props.onLoadedPlace();
     });
@@ -88,7 +89,9 @@ class FindPlace extends Component {
         >
           <PlaceList 
             places={this.props.places}
+            refreshing={this.props.isLoading}
             onItemSelected={this.itemSelectecdHandler}
+            onRefresh={this.props.onLoadPlaces()}
           />
         </Animated.View>
       );
@@ -130,7 +133,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return{
     places: state.places.places,
-    loadedPlace: state.places.loadedPlace
+    loadedPlace: state.places.loadedPlace,
+    isLoading: state.ui.isLoading
   };
 };
 
