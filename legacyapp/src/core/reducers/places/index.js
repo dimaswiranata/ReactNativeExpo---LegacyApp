@@ -1,7 +1,8 @@
-import { SET_PLACES, REMOVE_PLACE } from '../../type/places';
+import { SET_PLACES, REMOVE_PLACE, PLACE_LOADED, START_LOADED } from '../../type/places';
 
 const initialState = {
-  places: []
+  places: [],
+  loadedPlace: false
 };
 
 const Reducer = (state = initialState, action) => {
@@ -18,6 +19,16 @@ const Reducer = (state = initialState, action) => {
           return place.key !== action.key;
         })
       };
+    case PLACE_LOADED:
+      return {
+        ...state,
+        loadedPlace: true
+      };
+    case START_LOADED:
+      return {
+        ...state,
+        loadedPlace: false
+      }
     default:
       return state;
   }

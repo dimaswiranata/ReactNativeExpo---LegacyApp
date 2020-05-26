@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import Header from '../../components/Header';
 import PlaceList from '../../components/PlaceList';
 import NavigationUtils from '../../utils/navigation.utils';
-import { getPlaces } from '../../core/actions';
+import { getPlaces, loadedPlace } from '../../core/actions';
 
 class FindPlace extends Component {
 
@@ -41,6 +41,7 @@ class FindPlace extends Component {
       useNativeDriver: true
     }).start(() => {
       this.setState({placesLoaded: true});
+      this.props.onLoadedPlace();
     });
     this.placesLoadedHandler();
   };
@@ -78,7 +79,7 @@ class FindPlace extends Component {
       </Animated.View>
     );
 
-    if (this.state.placesLoaded){
+    if (this.props.loadedPlace){
       content = (
         <Animated.View
           style={{
@@ -99,7 +100,7 @@ class FindPlace extends Component {
           title='Find Place'
           openDrawer={true}
         />
-        <View style={this.state.placesLoaded ? null : styles.buttonContainer}>
+        <View style={this.props.loadedPlace ? null : styles.buttonContainer}>
           {content}
         </View>
       </>
@@ -128,13 +129,15 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return{
-    places: state.places.places
+    places: state.places.places,
+    loadedPlace: state.places.loadedPlace
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return{
-    onLoadPlaces: () => dispatch(getPlaces())
+    onLoadPlaces: () => dispatch(getPlaces()),
+    onLoadedPlace: () => dispatch(loadedPlace())
   };
 };
 

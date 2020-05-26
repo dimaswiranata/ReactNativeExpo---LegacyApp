@@ -1,5 +1,18 @@
-import { SET_PLACES, REMOVE_PLACE } from '../../type/places';
+import { SET_PLACES, REMOVE_PLACE, PLACE_LOADED, START_LOADED } from '../../type/places';
 import { uiStartLoading, uiStopLoading, authGetToken } from '../index';
+import NavigationUtils from '../../../utils/navigation.utils';
+
+export const loadedPlace = () => {
+  return {
+    type: PLACE_LOADED
+  };
+};
+
+export const startLoaded = () => {
+  return {
+    type: START_LOADED
+  };
+};
 
 export const addPlace = (placeName, location, image) => {
   return dispatch => {
@@ -49,6 +62,7 @@ export const addPlace = (placeName, location, image) => {
       .then(parsedRes => {
         console.log(parsedRes);
         dispatch(uiStopLoading());
+        NavigationUtils.navigate('Find');
       })
       .catch(err => {
         console.log(err);

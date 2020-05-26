@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Input } from 'react-native-elements';
 import { connect } from 'react-redux';
-import { addPlace } from '../../core/actions';
+import { addPlace, startLoaded } from '../../core/actions';
 
 import Header from '../../components/Header';
 import PickImage from '../../components/PickImage';
@@ -71,6 +71,7 @@ class SharePlace extends Component {
     this.reset();
     this.imagePicker.reset();
     this.locationPicker.reset();
+    this.props.onStartLoaded();
   };
 
   locationPickedHandler = location => {
@@ -190,7 +191,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return{
-    onAddPlace: (placeName, location, image) => dispatch(addPlace(placeName, location, image))
+    onAddPlace: (placeName, location, image) => dispatch(addPlace(placeName, location, image)),
+    onStartLoaded: () => dispatch(startLoaded())
   };
 };
 
