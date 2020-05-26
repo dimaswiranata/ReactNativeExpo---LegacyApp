@@ -69,6 +69,8 @@ class SharePlace extends Component {
       this.state.image
     );
     this.reset();
+    this.imagePicker.reset();
+    this.locationPicker.reset();
   };
 
   locationPickedHandler = location => {
@@ -124,8 +126,14 @@ class SharePlace extends Component {
         <ScrollView>
           <View style={styles.container}>
             <Text style={styles.textHeading}>Share a Place with us!</Text>
-            <PickImage onImagePicked={this.imagePickedHandler}/>
-            <PickLocation onLocationPick={this.locationPickedHandler}/>
+            <PickImage 
+              onImagePicked={this.imagePickedHandler}
+              ref={ref => (this.imagePicker = ref)}
+            />
+            <PickLocation 
+              onLocationPick={this.locationPickedHandler}
+              ref={ref => (this.locationPicker = ref)}
+            />
             <Input
               placeholder='Place Name'
               inputContainerStyle={styles.input}
