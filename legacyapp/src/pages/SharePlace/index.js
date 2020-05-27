@@ -18,16 +18,16 @@ import PickLocation from '../../components/PickLocation';
 
 class SharePlace extends Component {
 
-  // state = {
-  //   placeName: '',
-  //   isValidPlaceName: false,
-  //   buttonDisabledPlace: false,
-  //   location: null,
-  //   isValidLocation: false,
-  //   image: null,
-  //   isValidImage: false,
-  //   buttonDisabledLocation: false
-  // }
+  state = {
+    placeName: '',
+    isValidPlaceName: false,
+    buttonDisabledPlace: false,
+    location: null,
+    isValidLocation: false,
+    image: null,
+    isValidImage: false,
+    buttonDisabledLocation: false
+  }
 
   // componentDidMount(){
   //   console.log('did mount');
@@ -40,21 +40,21 @@ class SharePlace extends Component {
   // }
 
   componentWillMount() {
-    this.reset();
+    // this.reset();
   }
 
-  reset = () => {
-    this.setState({
-      placeName: '',
-      isValidPlaceName: false,
-      buttonDisabledPlace: false,
-      location: null,
-      isValidLocation: false,
-      image: null,
-      isValidImage: false,
-      buttonDisabledLocation: false
-    });
-  }
+  // reset = () => {
+  //   this.setState({
+  //     placeName: '',
+  //     isValidPlaceName: false,
+  //     buttonDisabledPlace: false,
+  //     location: null,
+  //     isValidLocation: false,
+  //     image: null,
+  //     isValidImage: false,
+  //     buttonDisabledLocation: false
+  //   });
+  // }
 
   placeNameChangedHandler = (value) => {
     if (value.trim().length >= 0 ) {
@@ -68,7 +68,7 @@ class SharePlace extends Component {
       this.state.location, 
       this.state.image
     );
-    this.reset();
+    // this.reset();
     this.imagePicker.reset();
     this.locationPicker.reset();
     this.props.onStartLoaded();
