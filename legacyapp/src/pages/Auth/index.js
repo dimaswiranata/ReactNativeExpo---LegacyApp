@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { Input, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
+import SplashScreen from 'react-native-splash-screen';
 import NavigationUtils from '../../utils/navigation.utils';
 import ImageUtils from '../../utils/images.utils';
 import Icon from '../../components/Icon';
@@ -39,6 +40,12 @@ class AuthScreen extends Component {
   constructor(props) {
     super(props);
     Dimensions.addEventListener("change", this.updateStyles);
+  }
+
+  componentDidMount() {
+    // do stuff while splash screen is shown
+    // After having done stuff (such as async tasks) hide the splash screen
+    SplashScreen.hide();
   }
 
   componentWillUnmount() {
